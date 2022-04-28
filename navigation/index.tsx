@@ -16,9 +16,10 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabHomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootStackScreenProps, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import WatchingFilm from '../components/WatchingFilm';
+import PlayingScreen from '../components/Playing';
+import { biOS } from '../utils';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -37,13 +38,14 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const colorScheme = useColorScheme();
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="Watching" component={WatchingFilm} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Modal" component={ModalScreen} options={{ headerShown: !biOS }} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -63,6 +65,7 @@ function BottomTabNavigator() {
       initialRouteName="TabHome"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false
       }}
     >
       <BottomTab.Screen
@@ -85,7 +88,26 @@ function BottomTabNavigator() {
               />
             </Pressable>
           ),
+          // headerShown: false
         })}
+      />
+      <BottomTab.Screen
+        name="TabPlaying"
+        component={PlayingScreen}
+        options={{
+          title: 'Playing',
+          tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} />,
+          // headerShown: false
+        }}
+      />
+      <BottomTab.Screen
+        name="TabFavorite"
+        component={PlayingScreen}
+        options={{
+          title: 'Favorited Films',
+          tabBarIcon: ({ color }) => <TabBarIcon name="heart" color={color} />,
+          // headerShown: false
+        }}
       />
       <BottomTab.Screen
         name="TabSettings"
@@ -93,6 +115,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => <TabBarIcon name="gears" color={color} />,
+          // headerShown: false
         }}
       />
     </BottomTab.Navigator >
@@ -106,5 +129,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
 }

@@ -9,7 +9,7 @@ import * as Linking from 'expo-linking';
 
 import { RootStackParamList } from '../types';
 
-const linking: LinkingOptions<RootStackParamList> = {
+const LINKING: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
@@ -17,21 +17,30 @@ const linking: LinkingOptions<RootStackParamList> = {
         screens: {
           TabHome: {
             screens: {
-              TabOneScreen: 'one',
+              TabHome: 'TabHome',
+            },
+          },
+          TabPlaying: {
+            screens: {
+              TabPlaying: 'TabPlaying',
+            },
+          },
+          TabFavorite: {
+            screens: {
+              TabFavorite: 'TabFavorite',
             },
           },
           TabSettings: {
             screens: {
-              TabTwoScreen: 'two',
+              TabSettings: 'TabSettings',
             },
           },
         },
       },
-      Modal: 'modal',
-      Watching: 'watching',
+      Modal: 'Modal',
       NotFound: '*',
     },
   },
 };
 
-export default linking;
+export default LINKING;

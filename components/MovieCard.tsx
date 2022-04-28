@@ -3,6 +3,9 @@ import { StyleSheet, ImageBackground } from 'react-native';
 import { THUMB_IMG, extractDateString, timenDate } from '../utils';
 import LAYOUT from '../constants/Layout';
 import FAKE_IMAGE from '../assets/images/image.jpg';
+import { NavigationContext, useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import { RootTabScreenProps } from '../types';
 
 interface IProps {
   _id: string;
@@ -15,8 +18,12 @@ interface IProps {
 }
 
 export default ({ _id, slug, origin_name, name, modified: { time } }: IProps) => {
+  const navigation: any = useNavigation();
 
-  return <View style={styles.card}>
+  return <View
+    style={styles.card}
+    onTouchEnd={() => navigation.navigate("Modal", { slug })}
+  >
     <ImageBackground
       // source={{ uri: THUMB_IMG({ slug }) }}
       source={require("../assets/images/image.jpg")}

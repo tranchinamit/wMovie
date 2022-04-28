@@ -5,6 +5,8 @@ import LAYOUT from '../constants/Layout';
 import videoSource from './video.mp4';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { useRef, useState } from 'react';
+import { useContext } from 'react';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const URL = `https://1080.hdphimonline.com/20220420/17802_fcc237c6/index.m3u8`
 
@@ -16,7 +18,11 @@ export default ({ m3u8Link }: IProps) => {
   const videoRef = useRef(null);
   const [status, setStatus] = useState({});
 
-  // console.log(status)
+
+  // const navigation = useContext(NavigationContext);
+  const route = useRoute();
+  console.log(route.params)
+
 
   return <View style={styles.wrapVideo}>
     <Video
@@ -40,6 +46,6 @@ const styles = StyleSheet.create({
   video: {
     alignSelf: 'center',
     width: LAYOUT.window.width,
-    height: LAYOUT.window.height - 120,
+    height: LAYOUT.window.height - 49,
   },
 });
