@@ -1,0 +1,1 @@
+export const REGEX_REMOVE_HTML_TAG = /<(.|\n)*?>/gim;
